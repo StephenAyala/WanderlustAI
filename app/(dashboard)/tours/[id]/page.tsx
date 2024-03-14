@@ -57,9 +57,9 @@ const SingleTourPage: React.FC = () => {
         <Image
           src={tourImage}
           width={300}
-          height={450}
+          height={300}
           alt={tour?.title || "Tour Image"}
-          className="rounded-xl shadow-xl mb-16 object-cover"
+          className="rounded-xl shadow-xl mb-16 object-cover h-auto w-auto"
           priority
         />
       )}

@@ -52,7 +52,7 @@ export const generateTourResponse = async ({
       "country": "${country}",
       "title": "title of the tour",
       "description": "short description of the city and tour",
-      "stops": ["stop 1", "stop 2", "stop 3"]
+      "stops": ["stop name", "stop name", "stop name"]
     }
   }
   "stops" property should include only three stops.
@@ -128,11 +128,13 @@ export const getAllTours = async (searchTerm?: string): Promise<ToursProps> => {
         {
           city: {
             contains: searchTerm,
+            mode: "insensitive",
           },
         },
         {
           country: {
             contains: searchTerm,
+            mode: "insensitive",
           },
         },
       ],
@@ -186,7 +188,6 @@ export const generateUserTokensForId = async (
       clerkId,
     },
   });
-
   return result?.tokens;
 };
 

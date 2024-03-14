@@ -3,13 +3,30 @@
 import { getAllTours } from "@/utils/actions";
 import { useQuery } from "@tanstack/react-query";
 import ToursList from "./ToursList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import debounce from "@/third-party/debounce/debounce";
 
 const ToursPage = () => {
   const [searchValue, setSearchValue] = useState<string>("");
-  const { data, isPending } = useQuery({
-    queryKey: ["tours", searchValue],
-    queryFn: () => getAllTours(searchValue),
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState<string>("");
+
+  // Debounce search value
+  useEffect(() => {
+    const handler = debounce(() => {
+      setDebouncedSearchValue(searchValue);
+    }, 300);
+
+    handler();
+
+    // Cleanup debounce
+    return () => {
+      handler.cancel();
+    };
+  }, [searchValue]);
+
+  const { data, isPending, error } = useQuery({
+    queryKey: ["tours", debouncedSearchValue],
+    queryFn: () => getAllTours(debouncedSearchValue),
   });
   return (
     <>
@@ -17,7 +34,8 @@ const ToursPage = () => {
         <div className="join w-full">
           <input
             type="text"
-            placeholder="enter city or country here..."
+            placeholder="Enter city or country..."
+            aria-label="Search for tours by city or country"
             className="input input-bordered join-item w-full"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
@@ -29,17 +47,19 @@ const ToursPage = () => {
             disabled={isPending}
             onClick={() => setSearchValue("")}
           >
-            {isPending ? "please wait..." : "reset"}
+            {isPending ? "Please wait..." : "Reset"}
           </button>
         </div>
       </form>
 
       {isPending ? (
-        <span className="loading"></span>
-      ) : data ? ( // Ensure data is defined before rendering ToursList
+        <span className="loading">Loading...</span>
+      ) : error ? (
+        <p>Error fetching tours.</p>
+      ) : data?.length > 0 ? (
         <ToursList data={data} />
       ) : (
-        <p>No data found.</p>
+        <p>No tours found.</p>
       )}
     </>
   );

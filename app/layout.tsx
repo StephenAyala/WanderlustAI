@@ -7,9 +7,9 @@ import Providers from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GPTGenius",
+  title: "WanderlustGPT",
   description:
-    "GPTGenius: Your AI language companion. Powered by OpenAI, it enhances your conversations, content creation, and more!",
+    "WanderlustGPT: Your AI language companion. Powered by OpenAI, it enhances your conversations, content creation, and more!",
 };
 
 export default function RootLayout({

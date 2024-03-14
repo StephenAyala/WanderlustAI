@@ -56,7 +56,7 @@ Refer to the [Clerk Documentation](https://clerk.com/) for comprehensive guides 
     - Install the Clerk Next.js package:
 
       ```sh
-      npm install @clerk/nextjs
+      bun add @clerk/nextjs
       ```
 
     - Configure your environment variables in `.env.local`:
@@ -89,7 +89,7 @@ Check [OpenAI Pricing](https://openai.com/pricing) to choose a plan that fits yo
 1.  **Install the OpenAI Package:**
 
     ```sh
-    npm install openai
+    bun add openai
     ```
 
 2.  **Generate an API Key:** Log in to your OpenAI account and create a new API key.

@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "@clerk/nextjs";
 import { ChatCompletionMessage } from "openai/resources";
 
-const Chat = () => {
+const Chat: React.FC = () => {
   const { userId } = useAuth();
 
   const [text, setText] = useState<string>("");
@@ -73,11 +73,11 @@ const Chat = () => {
         })}
         {isPending ? <span className="loading"></span> : null}
       </div>
-      <form onSubmit={handleSubmit} className="max-w-4xl pt-12">
-        <div className="join w-full">
+      <form onSubmit={handleSubmit} className="pt-12 flex justify-center">
+        <div className="join w-full max-w-4xl">
           <input
             type="text"
-            placeholder="Message GeniusGPT"
+            placeholder="Message WanderlustGPT"
             className="input input-bordered join-item w-full"
             value={text}
             required
@@ -88,7 +88,7 @@ const Chat = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? "please wait..." : "ask question"}
+            {isPending ? "Please wait..." : "Ask a question"}
           </button>
         </div>
       </form>

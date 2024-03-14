@@ -54,14 +54,24 @@ const NewTour: React.FC = () => {
   });
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Check if both city and country fields are filled out
+    // if (!city.trim() || !country.trim()) {
+    //   // Use toast to show error message to user
+    //   toast.error("Both city and country are required.");
+    //   return;
+    // }
+
     mutate({ city, country });
     setCity("");
     setCountry("");
   };
 
-  if (isPending) {
-    return <span className="loading loading-lg"></span>;
-  }
+  if (isPending)
+    return (
+      <span className="loading loading-lg" aria-live="assertive">
+        Loading...
+      </span>
+    );
 
   return (
     <>
@@ -71,6 +81,7 @@ const NewTour: React.FC = () => {
           <input
             type="text"
             className="input input-bordered join-item w-full"
+            name="city"
             placeholder="City"
             onChange={(e) => setCity(e.target.value)}
             required
@@ -78,6 +89,7 @@ const NewTour: React.FC = () => {
           <input
             type="text"
             className="input input-bordered join-item w-full"
+            name="country"
             placeholder="Country"
             onChange={(e) => setCountry(e.target.value)}
             required
