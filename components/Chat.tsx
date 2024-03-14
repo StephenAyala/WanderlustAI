@@ -23,9 +23,7 @@ const Chat = () => {
         toast.error("User ID is not available.");
         return;
       }
-      const currentTokens: number | undefined = await fetchUserTokensById(
-        userId
-      );
+      const currentTokens: number | null = await fetchUserTokensById(userId);
 
       if (!currentTokens || currentTokens < 100) {
         toast.error("Token balance too low....");

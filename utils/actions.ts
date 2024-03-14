@@ -52,7 +52,7 @@ export const generateTourResponse = async ({
       "country": "${country}",
       "title": "title of the tour",
       "description": "short description of the city and tour",
-      "stops": ["stop name", "stop name", "stop name"]
+      "stops": ["stop 1", "stop 2", "stop 3"]
     }
   }
   "stops" property should include only three stops.
@@ -166,14 +166,16 @@ export const generateTourImage = async ({ city, country }: Destination) => {
   }
 };
 
-export const fetchUserTokensById = async (clerkId: string) => {
+export const fetchUserTokensById = async (
+  clerkId: string
+): Promise<number | null> => {
   const result: TokenProps | null = await prisma.token.findUnique({
     where: {
       clerkId,
     },
   });
 
-  return result?.tokens;
+  return result?.tokens ?? null;
 };
 
 export const generateUserTokensForId = async (
@@ -184,13 +186,14 @@ export const generateUserTokensForId = async (
       clerkId,
     },
   });
+
   return result?.tokens;
 };
 
 export const fetchOrGenerateTokens = async (
   clerkId: string
 ): Promise<number> => {
-  const result: number | undefined = await fetchUserTokensById(clerkId);
+  const result: number | null = await fetchUserTokensById(clerkId);
   if (result) {
     return result;
     // return result.tokens;
