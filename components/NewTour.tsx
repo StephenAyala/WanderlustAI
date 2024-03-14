@@ -83,6 +83,7 @@ const NewTour: React.FC = () => {
             className="input input-bordered join-item w-full"
             name="city"
             placeholder="City"
+            autoComplete="off"
             onChange={(e) => setCity(e.target.value)}
             required
           />
@@ -91,6 +92,7 @@ const NewTour: React.FC = () => {
             className="input input-bordered join-item w-full"
             name="country"
             placeholder="Country"
+            autoComplete="off"
             onChange={(e) => setCountry(e.target.value)}
             required
           />

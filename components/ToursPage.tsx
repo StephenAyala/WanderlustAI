@@ -34,6 +34,7 @@ const ToursPage = () => {
         <div className="join w-full">
           <input
             type="text"
+            name="search"
             placeholder="Enter city or country..."
             aria-label="Search for tours by city or country"
             className="input input-bordered join-item w-full"

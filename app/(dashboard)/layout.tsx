@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className="drawer-side">
         <label
           htmlFor="my-drawer-2"
-          aria-label="close sidebar"
+          aria-label="Close Sidebar"
           className="drawer-overlay"
         ></label>
         <Sidebar />

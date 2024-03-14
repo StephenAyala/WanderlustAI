@@ -77,6 +77,8 @@ const Chat: React.FC = () => {
         <div className="join w-full max-w-4xl">
           <input
             type="text"
+            id="chatMessage"
+            name="chatMessage"
             placeholder="Message WanderlustGPT"
             className="input input-bordered join-item w-full"
             value={text}
