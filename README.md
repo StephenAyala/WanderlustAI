@@ -231,13 +231,10 @@ Implement stricter email validation rules to enhance security and reduce the pot
 
 By implementing these measures, the system will be more secure and less susceptible to common exploits that undermine the integrity of user management and authentication processes.
 
-## Deploy
+## Acknowledgments
 
-package.json
+This project was initially inspired by a [Udemy course on Next.js and OpenAI](https://www.udemy.com/course/nextjs-open-ai/learn/lecture/40901338#overview) and the corresponding [GitHub repository by John Smilga](https://github.com/john-smilga/nextjs-course-openai/tree/main/02-gptgenius). The original concepts and implementations provided a solid foundation for understanding the integration of Next.js with OpenAI's GPT-3.
 
-```js
+As the project evolved, I transitioned to using PostgreSQL for the database to leverage its robust features and compatibility with Prisma ORM, which streamlined database management and schema migrations. Additionally, I migrated the codebase to TypeScript to enhance code reliability, readability, and maintainability through static typing and advanced type checking.
 
-"scripts": {
-    "build": "npx prisma generate && next build",
-  },
-```
+These updates significantly improved the project's structure and scalability, allowing for more complex features and a more stable application environment.

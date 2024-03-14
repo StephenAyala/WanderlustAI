@@ -15,10 +15,12 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
 });
 
+// Uses OpenAI's API to generate a chat response based on the input chat messages
 export const generateChatResponse = async (
   chatMessages: ChatCompletionMessage[]
 ) => {
   try {
+    // Creates a chat completion request to OpenAI with predefined system messages and user input
     const response: OpenAI.Chat.Completions.ChatCompletion =
       await openai.chat.completions.create({
         messages: [
@@ -29,6 +31,7 @@ export const generateChatResponse = async (
         temperature: 0,
         max_tokens: 100,
       });
+    // Returns the chat message and the number of tokens used for generating the response
     return {
       message: response.choices[0].message,
       tokens: response?.usage?.total_tokens,
@@ -39,10 +42,12 @@ export const generateChatResponse = async (
   }
 };
 
+// Generates a personalized tour response based on the specified city and country using OpenAI
 export const generateTourResponse = async ({
   city,
   country,
 }: Destination): Promise<TourResponse | null> => {
+  // Template query for generating the tour response
   const query = `Find a exact ${city} in this exact ${country}.
   If ${city} and ${country} exist, create a list of things families can do in this ${city}, ${country}. 
   Once you have a list, create a one-day tour. Response should be in the following JSON format: 
@@ -59,6 +64,7 @@ export const generateTourResponse = async ({
   If you can't find info on exact ${city}, or ${city} does not exist, or its population is less than 1, or it is not located in the following ${country}, return { "tour": null }, with no additional characters.`;
 
   try {
+    // Sends the query to OpenAI and processes the response
     const response: OpenAI.Chat.Completions.ChatCompletion =
       await openai.chat.completions.create({
         messages: [
@@ -83,7 +89,12 @@ export const generateTourResponse = async ({
       console.error("No tour data found in OpenAI response");
       return null;
     }
-    const tokensUsed = response.usage?.total_tokens ?? 0;
+    const tokensUsed = response.usage?.total_tokens;
+    if (!tokensUsed) {
+      console.error("Token usage data not available in OpenAI response.");
+      return null;
+    }
+    // Returns the generated tour data and the tokens used
     return { tour: tourData.tour, tokens: tokensUsed };
   } catch (error) {
     console.error("Failed to generate tour response:", error);
@@ -91,10 +102,12 @@ export const generateTourResponse = async ({
   }
 };
 
+// Retrieves an existing tour from the database based on the provided city and country
 export const getExistingTour = async ({
   city,
   country,
 }: Destination): Promise<TourProps | null> => {
+  // Searches for a unique tour in the database where the city and country match
   return prisma.tour.findUnique({
     where: {
       city_country: {
@@ -105,16 +118,20 @@ export const getExistingTour = async ({
   });
 };
 
+// Creates a new tour in the database with the provided tour details
 export const createNewTour = async (
   tour: Omit<TourProps, "id" | "createdAt" | "updatedAt">
 ): Promise<TourProps> => {
+  // Inserts a new tour record into the database
   return prisma.tour.create({
     data: tour,
   });
 };
 
+// Retrieves all tours from the database, optionally filtered by a search term
 export const getAllTours = async (searchTerm?: string): Promise<ToursProps> => {
   if (!searchTerm) {
+    // Fetches all tours ordered by city if no search term is provided
     const tours: ToursProps = await prisma.tour.findMany({
       orderBy: {
         city: "asc",
@@ -122,6 +139,7 @@ export const getAllTours = async (searchTerm?: string): Promise<ToursProps> => {
     });
     return tours;
   }
+  // Fetches tours where the city or country contains the search term, case-insensitively
   const tours: ToursProps = await prisma.tour.findMany({
     where: {
       OR: [
@@ -146,7 +164,9 @@ export const getAllTours = async (searchTerm?: string): Promise<ToursProps> => {
   return tours;
 };
 
+// Retrieves a single tour from the database based on its unique ID
 export const getSingleTour = async (id: string): Promise<TourProps | null> => {
+  // Searches for a unique tour in the database by its ID
   return prisma.tour.findUnique({
     where: {
       id,
@@ -154,59 +174,74 @@ export const getSingleTour = async (id: string): Promise<TourProps | null> => {
   });
 };
 
+/**
+ * Generates an image for a tour using OpenAI's image generation feature
+ *
+ * Not currently used in the application.
+ */
 export const generateTourImage = async ({ city, country }: Destination) => {
   try {
+    // Requests an image generation from OpenAI based on the provided city and country
     const tourImage: OpenAI.Images.ImagesResponse =
       await openai.images.generate({
         prompt: `a panoramic view of the ${city} ${country}`,
         n: 1,
         size: "512x512",
       });
+    // Returns the URL of the generated image
     return tourImage?.data[0]?.url;
   } catch (error) {
     return null;
   }
 };
 
+// Fetches the current token balance for a user based on their Clerk ID
 export const fetchUserTokensById = async (
   clerkId: string
 ): Promise<number | null> => {
+  // Searches for the user's token record in the database by Clerk ID
   const result: TokenProps | null = await prisma.token.findUnique({
     where: {
       clerkId,
     },
   });
-
+  // Returns the current token balance, or null if not found
   return result?.tokens ?? null;
 };
 
+// Creates a new token record for a user with a default balance, if one doesn't exist
 export const generateUserTokensForId = async (
   clerkId: string
 ): Promise<number> => {
+  // Inserts a new token record into the database for the user
   const result: TokenProps = await prisma.token.create({
     data: {
       clerkId,
     },
   });
+  // Returns the initial token balance
   return result?.tokens;
 };
 
+// Ensures a user has a token balance, either by fetching the existing balance or generating a new one
 export const fetchOrGenerateTokens = async (
   clerkId: string
 ): Promise<number> => {
   const result: number | null = await fetchUserTokensById(clerkId);
   if (result) {
+    // If a token balance exists, it is returned
     return result;
-    // return result.tokens;
   }
+  // If no token balance exists, a new one is generated and returned
   return await generateUserTokensForId(clerkId);
-  // return (await generateUserTokensForId(clerkId)).tokens;
 };
 
+// Deducts a specified number of tokens from a user's balance
 export const subtractTokens = async (
   clerkId: string,
   tokens: number
 ): Promise<number> => {
+  // Updates the user's token balance in the database, decrementing by the specified amount
   const result = await prisma.token.update({
     where: {
       clerkId,
@@ -217,7 +252,8 @@ export const subtractTokens = async (
       },
     },
   });
+  // Invalidates the cache for the user's profile page to reflect the new token balance
   revalidatePath("/profile");
-  // Return the new token value
+  // Returns the new token balance
   return result.tokens;
 };

@@ -1,8 +1,14 @@
 import { fetchUserTokensById } from "@/utils/actions";
 import { UserProfile, auth } from "@clerk/nextjs";
+import toast from "react-hot-toast";
 
 const ProfilePage = async () => {
   const { userId } = auth();
+  // Ensure userId exists before proceeding
+  if (!userId) {
+    toast.error("User ID is not available.");
+    return;
+  }
   const currentTokens = await fetchUserTokensById(userId);
 
   return (
