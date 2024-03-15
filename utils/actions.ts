@@ -9,7 +9,7 @@ import {
   TourResponse,
   ToursProps,
 } from "@/types";
-import { ChatCompletionMessage } from "openai/resources";
+import { MessageInterface } from "@/components/Chat";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
@@ -17,20 +17,53 @@ const openai = new OpenAI({
 
 // Uses OpenAI's API to generate a chat response based on the input chat messages
 export const generateChatResponse = async (
-  chatMessages: ChatCompletionMessage[]
-) => {
+  chatMessages: MessageInterface[]
+): Promise<{
+  message: OpenAI.Chat.Completions.ChatCompletionMessage;
+  tokens: number | undefined;
+} | null> => {
   try {
     // Creates a chat completion request to OpenAI with predefined system messages and user input
-    const response: OpenAI.Chat.Completions.ChatCompletion =
-      await openai.chat.completions.create({
-        messages: [
-          { role: "system", content: "you are a helpful assistant" },
-          ...chatMessages,
-        ],
-        model: "gpt-3.5-turbo",
-        temperature: 0,
-        max_tokens: 100,
-      });
+    const response = await openai.chat.completions.create({
+      /**
+       * A list of messages comprising the conversation so far.
+       * [Example Python code](https://cookbook.openai.com/examples/how_to_format_inputs_to_chatgpt_models).
+       */
+      messages: [
+        { role: "system", content: "you are a helpful assistant" },
+        /**
+         * Error fires because ChatCompletionFunctionMessageParam requires the name property.
+         * ChatCompletionFunctionMessageParam has been deprecated as well.
+         * So for now I am ignoring the error.
+         */
+        //@ts-ignore
+        ...chatMessages,
+      ],
+      /**
+       * ID of the model to use. See the
+       * [model endpoint compatibility](https://platform.openai.com/docs/models/model-endpoint-compatibility)
+       * table for details on which models work with the Chat API.
+       */
+      model: "gpt-3.5-turbo",
+      /**
+       * What sampling temperature to use, between 0 and 2. Higher values like 0.8 will
+       * make the output more random, while lower values like 0.2 will make it more
+       * focused and deterministic.
+       *
+       * We generally recommend altering this or `top_p` but not both.
+       */
+      temperature: 0,
+      /**
+       * The maximum number of [tokens](/tokenizer) that can be generated in the chat
+       * completion.
+       *
+       * The total length of input tokens and generated tokens is limited by the model's
+       * context length.
+       */
+      max_tokens: 100,
+    });
+    console.log("response", response.choices);
+    console.log("response", response.choices[0]);
     // Returns the chat message and the number of tokens used for generating the response
     return {
       message: response.choices[0].message,

@@ -30,16 +30,22 @@ const HomePage = () => {
             </div>
             <SignedOut>
               <div className="grid grid-cols-2 gap-6">
-                <Link href="/sign-in" className="btn btn-secondary">
+                <Link
+                  href="/sign-in"
+                  className="btn btn-secondary cursor-pointer"
+                >
                   Log in
                 </Link>
-                <Link href="/sign-up" className="btn btn-secondary">
+                <Link
+                  href="/sign-up"
+                  className="btn btn-secondary cursor-pointer"
+                >
                   Sign Up
                 </Link>
               </div>
             </SignedOut>
             <SignedIn>
-              <Link href="/chat" className="btn btn-secondary">
+              <Link href="/chat" className="btn btn-secondary cursor-pointer">
                 Continue to chat
               </Link>
             </SignedIn>

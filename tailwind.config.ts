@@ -47,7 +47,22 @@ const config: Config = {
     },
   ],
   daisyui: {
-    themes: ["winter", "dracula"],
+    themes: [
+      "winter",
+      "dracula",
+      "black",
+      "bumblebee",
+      "emerald",
+      "lofi",
+      "forest",
+      "halloween",
+      "synthwave",
+      "retro",
+      "cyberpunk",
+      "valentine",
+      "dark",
+      "light",
+    ],
   },
 };
 function addVariablesForColors({ addBase, theme }: any) {
