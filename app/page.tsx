@@ -40,7 +40,7 @@ const HomePage = () => {
                   href="/sign-up"
                   className="btn btn-secondary cursor-pointer"
                 >
-                  Sign Up
+                  Sign up
                 </Link>
               </div>
             </SignedOut>
