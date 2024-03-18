@@ -5,7 +5,7 @@ const NoMessages = () => {
     <div className="flex h-full flex-col items-center justify-center text-token-text-primary">
       <div className="relative">
         <div className="mb-3 h-12 w-12">
-          <div className="gizmo-shadow-stroke relative flex h-full items-center justify-center rounded-full bg-white text-gray-950">
+          <div className="gizmo-shadow-stroke relative flex h-full items-center justify-center rounded-full bg-transparent text-gray-950 text-primary">
             <div className="h-9 w-9">
               <MainLogo />
             </div>

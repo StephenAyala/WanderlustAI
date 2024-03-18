@@ -86,7 +86,7 @@ const Chat: React.FC = () => {
           return (
             <div
               key={index}
-              className={`${bcg} flex py-4 -mx-8 px-8 text-xl leading-loose border-b border-base-300 flex flex-1 text-base mx-auto gap-3 md:px-5 lg:px-1 xl:px-5 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] group`}
+              className={`${bcg} flex py-4 -mx-8 px-8 leading-loose border-b border-base-300 flex flex-1 text-base mx-auto gap-3 md:px-5 lg:px-1 xl:px-5 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] group`}
             >
               <span className="mr-1">{avatar}</span>
               <div className="relative flex w-full flex-col">
