@@ -10,6 +10,7 @@ import { useState, FormEvent } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "@clerk/nextjs";
 import { ChatCompletionMessage, ChatCompletionRole } from "openai/resources";
+import NoMessages from "./NoMessages";
 
 export interface MessageInterface {
   role: ChatCompletionRole;
@@ -76,6 +77,7 @@ const Chat: React.FC = () => {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] grid grid-rows-[1fr,auto]">
+      {messages.length < 1 && <NoMessages />}
       <div>
         {messages.map(({ role, content }, index) => {
           const roleName = role == "user" ? "You" : "WanderlustGPT";
