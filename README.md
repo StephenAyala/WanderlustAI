@@ -152,7 +152,7 @@ Below is the Prisma model definition for a `Tour` entity. This model includes fi
 ```prisma
 datasource db {
   provider = "postgresql"
-  url          = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
