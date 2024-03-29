@@ -124,23 +124,23 @@ Once Prisma is set up, use the following commands to generate the Prisma client 
 
 1.  Add Prisma
     ```sh
-    bun add -d prisma@latest
-    bun add @prisma/client@latest
+    bun add -d prisma
+    bun add @prisma/client
     ```
 2.  Create your Prisma Schema file if not already created:
     ```sh
-    npx prisma init
+    bunx prisma init
     ```
 3.  Generate the Prisma client:
 
     ```sh
-    npx prisma generate
+    bunx prisma generate
     ```
 
 4.  Create and apply initial migrations:
 
     ```sh
-    npx prisma migrate dev --name init
+    bunx prisma migrate dev --name init
     ```
 
 ### Defining the Data Model
