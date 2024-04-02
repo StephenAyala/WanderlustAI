@@ -100,10 +100,6 @@ Check [OpenAI Pricing](https://openai.com/pricing) to choose a plan that fits yo
     OPENAI_API_KEY=<your_openai_api_key>
     ```
 
----
-
-This revised version provides a clearer, step-by-step guide for each section, making it easier for users to follow along and complete each setup process.
-
 ## NeonTech Documentation
 
 Welcome to the NeonTech documentation. Here you will find all the necessary steps to set up your environment, connect to your database, and define your data model using Prisma with a PostgreSQL database.
