@@ -16,7 +16,7 @@
     "@tanstack/react-query-devtools": "^5.8.1",
     "axios": "^1.6.2",
     "framer-motion": "^11.0.14",
-    "next": "14.1.3r",
+    "next": "14.2.12",
     "openai": "^4.14.2",
     "react": "^18",
     "react-dom": "^18",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^20",
+    "@types/node": "^22.5.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
