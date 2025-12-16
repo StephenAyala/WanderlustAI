@@ -16,7 +16,7 @@
     "@tanstack/react-query-devtools": "^5.8.1",
     "axios": "^1.6.2",
     "framer-motion": "^11.0.14",
-    "next": "15.4.8",
+    "next": "15.4.9",
     "openai": "^4.14.2",
     "react": "^18",
     "react-dom": "^18",
